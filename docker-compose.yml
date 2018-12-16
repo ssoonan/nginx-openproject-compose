@@ -1,0 +1,26 @@
+version: '3'
+services:
+  nginx:
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: ./nginx
+    ports:
+      - 
+      - '443:443'
+
+  openproject:
+    image: 'openproject/community'
+    volumes:
+      - /var/lib/openproject/pgdata:/var/lib/postgresql/9.6/main
+      - /var/lib/openproject/logs:/var/log/supervisor
+      - /var/lib/openproject/static:/var/db/openproject
+    
+    environment: 
+      - SECRET_KEY_BASE=bl@ckrubyStudioSecret2134
+      - OPENPROJECT_ATTACHMENTS__STORAGE=fog
+      - OPENPROJECT_FOG_CREDENTIALS_AWS__ACCESS__KEY__ID="AKIAI4H5NCJVQJERUKXA"
+      - OPENPROJECT_FOG_CREDENTIALS_AWS__SECRET__ACCESS__KEY="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"
+      - OPENPROJECT_FOG_CREDENTIALS_PROVIDER=AWS
+      - OPENPROJECT_FOG_CREDENTIALS_REGION="ap-northeast-2"
+      - OPENPROJECT_FOG_DIRECTORY=openproject-uploads
